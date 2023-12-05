@@ -11,6 +11,7 @@
         "php": "^8.1",
         "codeat3/blade-google-material-design-icons": "^1.18",
         "filament/filament": "^3.0-stable",
+        "filament/spatie-laravel-media-library-plugin": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/passport": "^11.10",
@@ -22,6 +23,7 @@
         "mallardduck/blade-boxicons": "^2.4",
         "owenvoke/blade-entypo": "^2.1",
         "saade/blade-iconsax": "^1.1",
+        "spatie/laravel-medialibrary": "^10.15",
         "spatie/laravel-permission": "^6.1"
     },
     "require-dev": {

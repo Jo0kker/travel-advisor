@@ -7,6 +7,7 @@ use App\Filament\Resources\AddressResource\RelationManagers\CityRelationManager;
 use App\Models\Address;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -42,6 +43,12 @@ class AddressResource extends Resource
             Select::make('city_id')
                 ->relationship('city', 'name')
                 ->searchable(),
+
+            SpatieMediaLibraryFileUpload::make('media')
+                ->collection('address_media')
+                ->multiple()->reorderable()->responsiveImages()
+                ->visibility('public')->imageEditor()
+                ->rules('mimes:png,jpg,jpeg'),
         ]);
     }
 

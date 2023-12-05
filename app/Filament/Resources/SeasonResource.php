@@ -19,6 +19,7 @@ class SeasonResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $navigationIcon = 'iconsax-out-sun';
     public static function form(Form $form): Form
     {
         return $form->schema([

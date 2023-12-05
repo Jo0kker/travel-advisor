@@ -21,8 +21,7 @@ class CountryResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationIcon = 'bx-worlddqsd
-    ';
+    protected static ?string $navigationIcon = 'bx-world';
 
     public static function form(Form $form): Form
     {

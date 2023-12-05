@@ -3,17 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CityResource\Pages;
-use App\Filament\Resources\CityResource\RelationManagers\CountryRelationManager;
-use App\Filament\Resources\CountryResource\RelationManagers\CityRelationManager;
 use App\Models\City;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
 class CityResource extends Resource
@@ -31,7 +27,15 @@ class CityResource extends Resource
         return $form->schema([
             TextInput::make('name')
                 ->required(),
-            ]);
+            Select::make('country_id')
+                ->relationship('country', 'name')
+                ->required(),
+            SpatieMediaLibraryFileUpload::make('media')
+                ->collection('city_media')
+                ->multiple()->reorderable()->responsiveImages()
+                ->visibility('public')->imageEditor()
+                ->rules('mimes:png,jpg,jpeg')
+        ]);
     }
 
     public static function table(Table $table): Table

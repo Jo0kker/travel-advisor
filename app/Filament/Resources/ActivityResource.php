@@ -9,6 +9,7 @@ use App\Filament\Resources\ActivityResource\RelationManagers\ThematicsRelationMa
 use App\Models\Activity;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -32,6 +33,12 @@ class ActivityResource extends Resource
                 ->required(),
 
             TextInput::make('description'),
+
+            SpatieMediaLibraryFileUpload::make('media')
+                ->collection('activity_media')
+                ->multiple()->reorderable()->responsiveImages()
+                ->visibility('public')->imageEditor()
+                ->rules('mimes:png,jpg,jpeg'),
 
             Select::make('address_id')
                 ->relationship('address', 'address_line_1')

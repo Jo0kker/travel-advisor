@@ -2,18 +2,20 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Country;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin Country */
-class CountryResource extends JsonResource
+/** @mixin Activity */
+class ActivityResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'description' => $this->description,
+            'address' => $this->address(),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

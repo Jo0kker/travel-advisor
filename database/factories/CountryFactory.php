@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\country;
+use App\Models\Country;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class countryFactory extends Factory
+class CountryFactory extends Factory
 {
-    protected $model = country::class;
+    protected $model = Country::class;
 
     public function definition(): array
     {

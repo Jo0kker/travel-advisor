@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Country extends Model
+class Season extends Model
 {
     use SoftDeletes, HasFactory;
 
@@ -14,8 +14,8 @@ class Country extends Model
         'name',
     ];
 
-    public function cities()
+    public function activities()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsToMany(Activity::class, 'activity_season', 'season_id', 'activity_id');
     }
 }

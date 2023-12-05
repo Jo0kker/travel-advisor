@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\countryResource\Pages;
+namespace App\Filament\Resources\ThematicResource\Pages;
 
-use App\Filament\Resources\countryResource;
+use App\Filament\Resources\ThematicResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
-class Editcountry extends EditRecord
+class EditThematic extends EditRecord
 {
-    protected static string $resource = countryResource::class;
+    protected static string $resource = ThematicResource::class;
 
     protected function getActions(): array
     {

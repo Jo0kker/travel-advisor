@@ -33,7 +33,7 @@ $register = function () {
 
     event(new Registered($user = User::create($validated)));
 
-    Auth::client($user);
+    Auth::login($user);
 
     $this->redirect(RouteServiceProvider::HOME, navigate: true);
 };

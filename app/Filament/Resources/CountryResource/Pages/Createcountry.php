@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Filament\Resources\countryResource\Pages;
+namespace App\Filament\Resources\CountryResource\Pages;
 
-use App\Filament\Resources\countryResource;
+use App\Filament\Resources\CountryResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class Createcountry extends CreateRecord
 {
-    protected static string $resource = countryResource::class;
+    protected static string $resource = CountryResource::class;
 
     protected function getActions(): array
     {

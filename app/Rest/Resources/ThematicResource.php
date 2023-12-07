@@ -2,18 +2,19 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\User;
+use App\Models\Thematic;
 use App\Rest\Resource as RestResource;
 use Lomkit\Rest\Http\Requests\RestRequest;
+use Lomkit\Rest\Relations\BelongsToMany;
 
-class UserResource extends RestResource
+class ThematicResource extends RestResource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<User>
+     * @var class-string<Thematic>
      */
-    public static $model = User::class;
+    public static $model = Thematic::class;
 
     /**
      * The exposed fields that could be provided
@@ -25,7 +26,10 @@ class UserResource extends RestResource
         return [
             'id',
             'name',
-            'email'
+            'description',
+            'address_id',
+            'created_at',
+            'updated_at'
         ];
     }
 
@@ -36,7 +40,9 @@ class UserResource extends RestResource
      */
     public function relations(RestRequest $request): array
     {
-        return [];
+        return [
+            BelongsToMany::make('activities', ActivityResource::class)
+        ];
     }
 
     /**
@@ -68,8 +74,16 @@ class UserResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function actions(RestRequest $request): array
-    {
+    public function actions(RestRequest $request): array {
+        return [];
+    }
+
+    /**
+     * The instructions that should be linked
+     * @param RestRequest $request
+     * @return array
+     */
+    public function instructions(RestRequest $request): array {
         return [];
     }
 }

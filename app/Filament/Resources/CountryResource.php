@@ -4,14 +4,16 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\countryResource\Pages;
 use App\Filament\Resources\CountryResource\RelationManagers\CitiesRelationManager;
-use App\Filament\Resources\CountryResource\RelationManagers\CityRelationManager;
 use App\Models\Country;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CountryResource extends Resource
 {
@@ -37,6 +39,12 @@ class CountryResource extends Resource
             TextColumn::make('name')
                 ->searchable()
                 ->sortable(),
+        ])->filters([
+            TrashedFilter::make(),
+        ])->actions([
+            Tables\Actions\DeleteAction::make(),
+            Tables\Actions\ForceDeleteAction::make(),
+            Tables\Actions\RestoreAction::make(),
         ]);
     }
 
@@ -59,5 +67,13 @@ class CountryResource extends Resource
         return [
             CitiesRelationManager::class
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 }

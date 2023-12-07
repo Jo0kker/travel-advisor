@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ActivityResource\Pages;
 use App\Filament\Resources\ActivityResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Actions;
 
 class EditActivity extends EditRecord
 {
@@ -14,6 +15,15 @@ class EditActivity extends EditRecord
     {
         return [
             DeleteAction::make(),
+        ];
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\DeleteAction::make(),
+            Actions\ForceDeleteAction::make(),
+            Actions\RestoreAction::make(),
         ];
     }
 }

@@ -7,14 +7,16 @@ use App\Filament\Resources\ActivityResource\RelationManagers\AddressRelationMana
 use App\Filament\Resources\ActivityResource\RelationManagers\SeasonsRelationManager;
 use App\Filament\Resources\ActivityResource\RelationManagers\ThematicsRelationManager;
 use App\Models\Activity;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ActivityResource extends Resource
 {
@@ -70,7 +72,21 @@ class ActivityResource extends Resource
                 ->sortable(),
 
             TextColumn::make('description'),
-        ]);
+        ])->filters([
+            Tables\Filters\TrashedFilter::make(),
+        ])
+            ->actions([
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ForceDeleteAction::make(),
+                Tables\Actions\RestoreAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getPages(): array
@@ -85,6 +101,14 @@ class ActivityResource extends Resource
     public static function getGloballySearchableAttributes(): array
     {
         return ['name'];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
     }
 
     public static function getRelations(): array

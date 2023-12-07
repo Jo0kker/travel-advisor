@@ -2,18 +2,20 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\User;
 use App\Rest\Resource as RestResource;
 use Lomkit\Rest\Http\Requests\RestRequest;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class UserResource extends RestResource
+class MediaResource extends RestResource
 {
+    use \Lomkit\Rest\Concerns\Resource\DisableAuthorizations;
+
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<User>
+     * @var class-string<Media>
      */
-    public static $model = User::class;
+    public static $model = Media::class;
 
     /**
      * The exposed fields that could be provided
@@ -23,9 +25,19 @@ class UserResource extends RestResource
     public function fields(RestRequest $request): array
     {
         return [
-            'id',
+            'uuid',
             'name',
-            'email'
+            'file_name',
+            'mime_type',
+            'disk',
+            'conversions_disk',
+            'size',
+            'manipulations',
+            'custom_properties',
+            'responsive_images',
+            'order_column',
+            'created_at',
+            'updated_at'
         ];
     }
 
@@ -68,8 +80,16 @@ class UserResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function actions(RestRequest $request): array
-    {
+    public function actions(RestRequest $request): array {
+        return [];
+    }
+
+    /**
+     * The instructions that should be linked
+     * @param RestRequest $request
+     * @return array
+     */
+    public function instructions(RestRequest $request): array {
         return [];
     }
 }

@@ -2,18 +2,18 @@
 
 namespace App\Rest\Resources;
 
-use App\Models\User;
+use App\Models\City;
 use App\Rest\Resource as RestResource;
 use Lomkit\Rest\Http\Requests\RestRequest;
 
-class UserResource extends RestResource
+class CityResource extends RestResource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<User>
+     * @var class-string<City>
      */
-    public static $model = User::class;
+    public static $model = City::class;
 
     /**
      * The exposed fields that could be provided
@@ -25,7 +25,10 @@ class UserResource extends RestResource
         return [
             'id',
             'name',
-            'email'
+            'country_id',
+            'created_at',
+            'updated_at',
+            'deleted_at'
         ];
     }
 
@@ -36,7 +39,9 @@ class UserResource extends RestResource
      */
     public function relations(RestRequest $request): array
     {
-        return [];
+        return [
+
+        ];
     }
 
     /**
@@ -68,8 +73,16 @@ class UserResource extends RestResource
      * @param RestRequest $request
      * @return array
      */
-    public function actions(RestRequest $request): array
-    {
+    public function actions(RestRequest $request): array {
+        return [];
+    }
+
+    /**
+     * The instructions that should be linked
+     * @param RestRequest $request
+     * @return array
+     */
+    public function instructions(RestRequest $request): array {
         return [];
     }
 }

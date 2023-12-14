@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\countryResource\Pages;
 use App\Filament\Resources\CountryResource\RelationManagers\CitiesRelationManager;
 use App\Models\Country;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -30,6 +32,13 @@ class CountryResource extends Resource
         return $form->schema([
             TextInput::make('name')
                 ->required(),
+            SpatieMediaLibraryFileUpload::make('media')
+                ->multiple()->reorderable()
+                ->customProperties(['zip_filename_prefix' => 'countries/'])
+                ->directory('countries')
+                ->visibility('public')
+                ->imageEditor()
+                ->rules('mimes:png,jpg,jpeg')
         ]);
     }
 

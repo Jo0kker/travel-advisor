@@ -39,7 +39,7 @@ return [
     /*
      * When enabled, media collections will be serialised using the default
      * laravel model serialization behaviour.
-     * 
+     *
      * Keep this option disabled if using Media Library Pro components (https://medialibrary.pro)
      */
     'use_default_collection_serialization' => false,
@@ -209,6 +209,8 @@ return [
          */
         'extra_headers' => [
             'CacheControl' => 'max-age=604800',
+            'visibility' => 'public',
+            'ACL' => 'public-read'
         ],
     ],
 

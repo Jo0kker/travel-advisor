@@ -7,9 +7,11 @@ use App\Filament\Resources\ActivityResource\RelationManagers\AddressRelationMana
 use App\Filament\Resources\ActivityResource\RelationManagers\SeasonsRelationManager;
 use App\Filament\Resources\ActivityResource\RelationManagers\ThematicsRelationManager;
 use App\Models\Activity;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
@@ -37,16 +39,17 @@ class ActivityResource extends Resource
             TextInput::make('description'),
 
             SpatieMediaLibraryFileUpload::make('media')
+                ->columnSpanFull()->label('Images')
                 ->collection('activity_media')
                 ->multiple()->reorderable()->responsiveImages()
                 ->visibility('public')->imageEditor()
                 ->rules('mimes:png,jpg,jpeg'),
 
-            Select::make('address_id')
+            Select::make('address_id')->label('Adresse')
                 ->relationship('address', 'address_line_1')
                 ->searchable(),
 
-            Select::make('seasons')
+            Select::make('seasons')->label('Saisons')
                 ->relationship('seasons', 'name')
                 ->multiple()
                 ->searchable()->createOptionForm([
@@ -54,13 +57,25 @@ class ActivityResource extends Resource
                         ->required(),
                 ]),
 
+            // bool is active only for admin
+            Toggle::make('is_active')
+                ->label('Est actif ?')
+                ->disabled(!auth()->user()->hasRole('admin'))
+                ->default(false),
+
             Select::make('thematics')
+                ->label('Thématiques')
                 ->relationship('thematics', 'name')
                 ->multiple()
                 ->searchable()->createOptionForm([
                     TextInput::make('name')
                         ->required(),
                 ]),
+
+            RichEditor::make('content')->columnSpanFull()
+                ->label('Contenu')
+                ->fileAttachmentsDirectory('activity_content')
+                ->fileAttachmentsVisibility('public')
         ]);
     }
 

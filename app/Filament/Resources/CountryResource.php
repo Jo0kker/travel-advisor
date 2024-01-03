@@ -6,8 +6,10 @@ use App\Filament\Resources\countryResource\Pages;
 use App\Filament\Resources\CountryResource\RelationManagers\CitiesRelationManager;
 use App\Models\Country;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -38,7 +40,17 @@ class CountryResource extends Resource
                 ->directory('countries')
                 ->visibility('public')
                 ->imageEditor()
-                ->rules('mimes:png,jpg,jpeg')
+                ->rules('mimes:png,jpg,jpeg'),
+
+            Toggle::make('is_active')
+                ->label('Est actif ?')
+                ->disabled(!auth()->user()->hasRole('admin'))
+                ->default(false),
+
+            RichEditor::make('content')->columnSpanFull()
+                ->label('Contenu')
+                ->fileAttachmentsDirectory('activity_content')
+                ->fileAttachmentsVisibility('public')
         ]);
     }
 

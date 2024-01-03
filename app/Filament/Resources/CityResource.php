@@ -4,9 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\CityResource\Pages;
 use App\Models\City;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\DeleteAction;
@@ -41,7 +43,17 @@ class CityResource extends Resource
                 ->collection('city_media')
                 ->multiple()->reorderable()->responsiveImages()
                 ->visibility('public')->imageEditor()
-                ->rules('mimes:png,jpg,jpeg')
+                ->rules('mimes:png,jpg,jpeg'),
+
+            Toggle::make('is_active')
+                ->label('Est actif ?')
+                ->disabled(!auth()->user()->hasRole('admin'))
+                ->default(false),
+
+            RichEditor::make('content')->columnSpanFull()
+                ->label('Contenu')
+                ->fileAttachmentsDirectory('activity_content')
+                ->fileAttachmentsVisibility('public')
         ]);
     }
 
@@ -55,6 +67,15 @@ class CityResource extends Resource
             TextColumn::make('country.name')
                 ->searchable()
                 ->sortable(),
+
+            TextColumn::make('is_active')
+                ->sortable()
+                ->label('Est actif ?'),
+
+            TextColumn::make('owner.name')
+                ->searchable()
+                ->sortable()
+                ->label('Propriétaire'),
         ])->filters([
             TrashedFilter::make(),
         ])->actions([

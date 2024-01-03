@@ -4,9 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AddressResource\Pages;
 use App\Models\Address;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
@@ -29,9 +31,11 @@ class AddressResource extends Resource
     {
         return $form->schema([
             TextInput::make('address_line_1')
+                ->label('Adresse 1')
                 ->required(),
 
-            TextInput::make('address_line_2'),
+            TextInput::make('address_line_2')
+                ->label('Adresse 2'),
 
             TextInput::make('latitude')
                 ->numeric(),
@@ -50,19 +54,27 @@ class AddressResource extends Resource
                 ->multiple()->reorderable()->responsiveImages()
                 ->visibility('public')->imageEditor()
                 ->rules('mimes:png,jpg,jpeg'),
+
+            Toggle::make('is_active')
+                ->label('Est actif ?')
+                ->disabled(!auth()->user()->hasRole('admin'))
+                ->default(false),
+
+            RichEditor::make('content')->columnSpanFull()
+                ->label('Contenu')
+                ->fileAttachmentsDirectory('activity_content')
+                ->fileAttachmentsVisibility('public')
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            TextColumn::make('address_line_1'),
+            TextColumn::make('address_line_1')->label('Adresse 1'),
 
-            TextColumn::make('address_line_2'),
+            TextColumn::make('address_line_2')->label('Adresse 2'),
 
-            TextColumn::make('latitude'),
-
-            TextColumn::make('longitude'),
+            TextColumn::make('owner.name')->label('Propriétaire'),
 
             TextColumn::make('zip_code'),
 

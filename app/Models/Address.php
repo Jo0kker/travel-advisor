@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +14,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Address extends Model implements HasMedia
 {
-    use SoftDeletes, HasFactory, InteractsWithMedia;
+    use SoftDeletes, HasFactory, InteractsWithMedia, HasOwner;
 
     protected $fillable = [
         'address_line_1',
@@ -22,6 +23,9 @@ class Address extends Model implements HasMedia
         'longitude',
         'zip_code',
         'city_id',
+        'owner_id',
+        'is_active',
+        'content',
     ];
 
     public function city(): BelongsTo

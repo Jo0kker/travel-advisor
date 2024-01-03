@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ThematicResource\Pages;
 use App\Models\Thematic;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
@@ -34,6 +36,16 @@ class ThematicResource extends Resource
             Placeholder::make('updated_at')
                 ->label('Last Modified Date')
                 ->content(fn(?Thematic $record): string => $record?->updated_at?->diffForHumans() ?? '-'),
+
+            Toggle::make('is_active')
+                ->label('Est actif ?')
+                ->disabled(!auth()->user()->hasRole('admin'))
+                ->default(false),
+
+            RichEditor::make('content')->columnSpanFull()
+                ->label('Contenu')
+                ->fileAttachmentsDirectory('activity_content')
+                ->fileAttachmentsVisibility('public')
         ]);
     }
 

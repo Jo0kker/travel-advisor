@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasOwner;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,12 +13,15 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Activity extends Model implements HasMedia
 {
-    use SoftDeletes, HasFactory, InteractsWithMedia;
+    use SoftDeletes, HasFactory, InteractsWithMedia, HasOwner;
 
     protected $fillable = [
         'name',
         'description',
-        'address_id'
+        'address_id',
+        'owner_id',
+        'is_active',
+        'content',
     ];
 
     public function address(): BelongsTo

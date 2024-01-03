@@ -19,9 +19,9 @@ $logout = function (Logout $logout) {
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" wire:navigate>
                         <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" /> -->
-                        <dotlottie-player 
+                        <dotlottie-player
                             src="https://lottie.host/9a0e216d-11bd-4c29-b3c1-341cea9fc8e5/UhSK6MdNI4.json"
-                            background="transparent" speed="1" 
+                            background="transparent" speed="1"
                             class="block h-16 w-auto fill-current text-gray-800 dark:text-gray-200"
                             loop autoplay />
                     </a>
@@ -35,7 +35,7 @@ $logout = function (Logout $logout) {
                 </div>
 
                 <!-- if user has role admin show link to /admin -->
-                @if (auth()->user()->hasRole('admin'))
+                @if (auth()->user()->hasAnyRole(['admin', 'modo']))
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <a href="/admin"
                             :active="request()->routeIs('admin')"
